@@ -7,7 +7,7 @@ package com.blackdiz.algorithm.chapter4;
 public class PriorityQueue {
   private int maxSize;
   private int[] queue;
-  private int nItems = 0;
+  private int itemNums = 0;
 
   public PriorityQueue(int max) {
     maxSize = max;
@@ -19,11 +19,11 @@ public class PriorityQueue {
       System.out.println("Queue is full.");
       return;
     }
-    if (nItems == 0) { // 如果目前queue內沒有元素則可以直接插入
-      queue[nItems++] = item;
+    if (itemNums == 0) { // 如果目前queue內沒有元素則可以直接插入
+      queue[itemNums++] = item;
     } else {
       int i;
-      for (i = nItems - 1; i >= 0; i--) { // 由後方開始比對
+      for (i = itemNums - 1; i >= 0; i--) { // 由後方開始比對
         int current = queue[i];
         // 如果新元素比目前這index的元素大, 則將目前index的元素往後移, 直到新元素比index的元素小或相同為止
         if (item > current) {
@@ -33,21 +33,21 @@ public class PriorityQueue {
         }
       }
       queue[i + 1] = item; // 如果新元素比目前所指到index的元素小或相同就放在index的右邊
-      nItems++;
+      itemNums++;
     }
   }
 
 
   public int remove() {
-    return queue[--nItems];
+    return queue[--itemNums];
   }
 
   public boolean isFull() {
-    return nItems == maxSize;
+    return itemNums == maxSize;
   }
 
   public boolean isEmpty() {
-    return nItems == 0;
+    return itemNums == 0;
   }
 
   public void display() {
