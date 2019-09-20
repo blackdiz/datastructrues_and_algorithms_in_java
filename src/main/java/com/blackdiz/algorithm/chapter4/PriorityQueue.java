@@ -1,10 +1,10 @@
 package com.blackdiz.algorithm.chapter4;
 
 /**
- *
  * @author blackdiz
  */
 public class PriorityQueue {
+
   private int maxSize;
   private int[] queue;
   private int itemNums = 0;
@@ -51,7 +51,7 @@ public class PriorityQueue {
   }
 
   public void display() {
-    System.out.println("---------------------------------");
+    System.out.print("Current content of the queue: ");
     for (int i = 0; i < queue.length; i++) {
       System.out.print(queue[i] + ",");
     }
@@ -71,15 +71,15 @@ public class PriorityQueue {
     q.insert(7);
     q.display();
 
-    System.out.println(q.remove());
+    System.out.println("Get: " + q.remove());
     q.display();
-    System.out.println(q.remove());
+    System.out.println("Get: " + q.remove());
     q.display();
-    System.out.println(q.remove());
+    System.out.println("Get: " + q.remove());
     q.display();
-    System.out.println(q.remove());
+    System.out.println("Get: " + q.remove());
     q.display();
-    System.out.println(q.remove());
+    System.out.println("Get: " + q.remove());
     q.display();
   }
 }
