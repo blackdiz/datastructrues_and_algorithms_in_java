@@ -1,5 +1,9 @@
 package com.blackdiz.algorithm.chapter4;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 class StackX {
 
   private char[] stackArray;
@@ -50,20 +54,20 @@ class StackX {
       System.out.print(peekN(j));
       System.out.print(" ");
     }
-    System.out.print("");
+    System.out.println("");
   }
 }
 
 /**
  * infix to postfix conversion.
  */
-class InToPost {
+class InfixToPostfix {
 
   private StackX stack;
   private String input;
   private StringBuilder output = new StringBuilder();
 
-  public InToPost(String input) {
+  public InfixToPostfix(String input) {
     this.input = input;
     stack = new StackX(input.length());
   }
@@ -93,11 +97,13 @@ class InToPost {
           output.append(ch);
           break;
       }
+      System.out.println("Current ouput is: " + output.toString());
+    }
 
-      while (!stack.isEmpty()) {
-        stack.display("While ");
-        output.append(stack.pop());
-      }
+    // 如果已讀到整個Infix運算式的最後, 則把stack中剩餘的運算子都按順序pop出來
+    while (!stack.isEmpty()) {
+      stack.display("While ");
+      output.append(stack.pop());
     }
 
     stack.display("End ");
@@ -140,6 +146,27 @@ class InToPost {
         break;
       } else {
         output.append(c);
+      }
+    }
+  }
+}
+
+public class InfixApp {
+
+  public static void main(String args[]) throws IOException {
+    String input, output;
+    try (InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr)) {
+      while (true) {
+        System.out.print("Enter infix: ");
+        System.out.flush();
+        input = br.readLine();
+        if ("".equals(input)) {
+          break;
+        }
+        InfixToPostfix theTrans = new InfixToPostfix(input);
+        output = theTrans.doTrans();
+        System.out.println("Postfix is " + output + "\n");
       }
     }
   }
