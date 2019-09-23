@@ -75,14 +75,18 @@ class InToPost {
       switch (ch) {
         case '+':
         case '-':
+          // 遇到+、-時, 開始檢查之前stack中儲存的運算子，同時+、-的比較優先權設為1
+          gotOperator(ch, 1);
+          break;
         case '*':
         case '/':
-          gotOperator(ch);
+          // 遇到*、/時, 開始檢查之前stack中儲存的運算子，同時*、/的比較優先權設為2
+          gotOperator(ch, 2);
           break;
         case '(':
           stack.push(ch);
           break;
-        case ')':
+        case ')': // 遇到)時，表示()內的運算式已經讀取完了，因此開始pop之前存放在stack中的運算子，直到遇到stack中的)為止
           gotParenthesis(ch);
           break;
         default:
@@ -100,18 +104,28 @@ class InToPost {
     return output.toString();
   }
 
-  public void gotOperator(char opThis) {
+  public void gotOperator(char opThis, int thisPrecedence) {
     while (!stack.isEmpty()) {
       char opTop = stack.pop();
       if (opTop == '(') {
+        // 如果前一個stack儲存的是(，表示()的運算式尚未結束，因此直接儲存這次讀取的運算子
         stack.push(opTop);
         break;
       } else {
+        int topPrecedence;
         if (opTop == '+' || opTop == '-') {
-          stack.push(opTop);
-          break;
+          topPrecedence = 1;
         } else {
+          topPrecedence = 2;
+        }
+
+        // 如果此次讀取的運算子優先權小於目前stack中最上面的運算子，則表示stack最上的運算子應該優先套用，所以pop出來
+        if (thisPrecedence < topPrecedence) {
           output.append(opTop);
+        } else {
+          // 反之，則儲存到stack中，等待下次讀入的運算子再決定是否可以pop
+          stack.push(opThis);
+          break;
         }
       }
     }
