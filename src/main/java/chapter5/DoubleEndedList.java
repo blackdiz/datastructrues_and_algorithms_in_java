@@ -51,7 +51,7 @@ public class DoubleEndedList {
     last = newLink;
   }
 
-  public long deleteFist() {
+  public long deleteFirst() {
     long temp = first.lData;
     if (first.next == null) {
       // 如果list內只有一個link時, 在刪除後last也必須指向null
@@ -114,8 +114,8 @@ public class DoubleEndedList {
 
     list.displayList();
 
-    list.deleteFist();
-    list.deleteFist();
+    list.deleteFirst();
+    list.deleteFirst();
 
     list.displayList();
 
