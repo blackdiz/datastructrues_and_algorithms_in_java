@@ -1,21 +1,5 @@
 package chapter5;
 
-class Link {
-
-  public int iData;
-  public double dData;
-  public Link next;
-
-  public Link(int iData, double dData) {
-    this.iData = iData;
-    this.dData = dData;
-  }
-
-  public void displayLink() {
-    System.out.print("{" + iData + ", " + dData + "}");
-  }
-}
-
 public class LinkList {
 
   private Link first;
@@ -28,7 +12,7 @@ public class LinkList {
     return first == null;
   }
 
-  public void insertFisrt(int iData, double dData) {
+  public void insertFirst(int iData, double dData) {
     Link newLink = new Link(iData, dData);
     newLink.next = first; // 將下個link的參照指到目前的第一個link
     first = newLink; // 新的link變成第一個link
@@ -59,10 +43,10 @@ public class LinkList {
   public static void main(String[] args) {
     LinkList list = new LinkList();
 
-    list.insertFisrt(22, 2.99);
-    list.insertFisrt(44, 4.99);
-    list.insertFisrt(66, 6.99);
-    list.insertFisrt(88, 8.99);
+    list.insertFirst(22, 2.99);
+    list.insertFirst(44, 4.99);
+    list.insertFirst(66, 6.99);
+    list.insertFirst(88, 8.99);
 
     list.displayList();
     while (!list.isEmpty()) {
