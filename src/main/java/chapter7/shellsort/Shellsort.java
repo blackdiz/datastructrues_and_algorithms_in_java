@@ -36,7 +36,8 @@ class ArraySh {
       for (outter = h; outter < nElems; outter++) {
         temp = array[outter];
         inner = outter;
-        // 因為是用h做間隔, 所以比較的元素是inner - h
+        // 因為是用h做間隔, 所以比較的元素是inner - h,
+        // 而當inner < (h - 1)時, 表示已無下一個元素可以比較, 所以while的條件之一為inner > (h - 1)
         while (inner > (h - 1) && array[inner - h] >= temp) {
           array[inner] = array[inner - h]; // 若下一個元素比較大就往右移動h個間隔
           inner = inner - h;
