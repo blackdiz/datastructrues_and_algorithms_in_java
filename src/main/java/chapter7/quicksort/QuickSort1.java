@@ -88,7 +88,7 @@ public class QuickSort1 {
 
   public static void main(String[] args) {
     int maxSize = 16;
-    ArrayIns arrayIns = new ArrayIns(16);
+    ArrayIns arrayIns = new ArrayIns(maxSize);
 
     for (int i = 0; i < maxSize; i++) {
       arrayIns.insert((int) (Math.random() * 199));
