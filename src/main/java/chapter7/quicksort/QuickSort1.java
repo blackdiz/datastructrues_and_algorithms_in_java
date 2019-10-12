@@ -1,13 +1,11 @@
 package chapter7.quicksort;
 
-import javax.lang.model.util.Elements.Origin;
-
-class ArrayIns {
+class Array {
 
   private long[] array;
   private int nElems;
 
-  public ArrayIns(int maxSize) {
+  public Array(int maxSize) {
     array = new long[maxSize];
     nElems = 0;
   }
@@ -88,14 +86,14 @@ public class QuickSort1 {
 
   public static void main(String[] args) {
     int maxSize = 16;
-    ArrayIns arrayIns = new ArrayIns(maxSize);
+    Array array = new Array(maxSize);
 
     for (int i = 0; i < maxSize; i++) {
-      arrayIns.insert((int) (Math.random() * 199));
+      array.insert((int) (Math.random() * 199));
     }
 
-    arrayIns.display();
-    arrayIns.quickSort();
-    arrayIns.display();
+    array.display();
+    array.quickSort();
+    array.display();
   }
 }
