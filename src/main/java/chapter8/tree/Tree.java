@@ -1,5 +1,7 @@
 package chapter8.tree;
 
+import java.util.Stack;
+
 class Node {
 
   public int iData;
@@ -95,8 +97,7 @@ public class Tree {
       }
     }
 
-    if (current.leftChild == null && current.rightChild == null) {
-      // 如果被刪除的 node 沒有 child
+    if (current.leftChild == null && current.rightChild == null) { // 如果被刪除的 node 沒有 child
       if (current == root) {
         root = null;
       } else if (isLeftChild) {
@@ -104,8 +105,7 @@ public class Tree {
       } else {
         parent.rightChild = null;
       }
-    } else if (current.rightChild == null) {
-      // 如果被刪除的 node 只有 left child
+    } else if (current.rightChild == null) { // 如果被刪除的 node 只有 left child
       if (current == root) {
         // 如果是 root, 則用 left child 當成新的 root
         root = current.leftChild;
@@ -116,8 +116,7 @@ public class Tree {
         // 不是 root 且 node 是 parent 的 right child, 將 right child 接到 parent 的 right child
         parent.rightChild = current.leftChild;
       }
-    } else if (current.leftChild == null) {
-      // 如果被刪除的 node 只有 right child
+    } else if (current.leftChild == null) { // 如果被刪除的 node 只有 right child
       if (current == root) {
         // 如果是 root, 則用 right child 當成新的 root
         root = current.rightChild;
@@ -128,8 +127,7 @@ public class Tree {
         // 不是 root 且 node 是 parent 的 right child, 將 right child 接到 parent 的 right child
         parent.rightChild = current.rightChild;
       }
-    } else {
-      // 如果被刪除的 node 有 2 個 child
+    } else { // 如果被刪除的 node 有 2 個 child
       Node successor = getSuccessor(current);
 
       if (current == root) {
@@ -142,5 +140,91 @@ public class Tree {
 
       successor.leftChild = current.leftChild;
     }
+
+    return true;
+  }
+
+  private Node getSuccessor(Node deletedNode) {
+    Node successorParent = deletedNode;
+    Node successor = deletedNode;
+
+    // 先往被刪除 node 的 right child 移動
+    Node current = deletedNode.rightChild;
+
+    // 沿著 left child 移動, 直到碰到 null
+    while (current != null) {
+      successorParent = successor;
+      successor = current;
+      current = current.leftChild;
+    }
+
+    // 如果 successor 不是被刪除 node 的 right child,
+    if (successor != deletedNode.rightChild) {
+      // 把 successor 的 right child 接到它 parent 的 left child 上, 因為 successor 要取代被刪除的 node
+      successorParent.leftChild = successor.rightChild;
+      // 將被刪除 node 的 right child 接到 successor 的 right child 上, 因為 successor 要取代被刪除的 node
+      successor.rightChild = deletedNode.rightChild;
+    }
+
+    return successor;
+  }
+
+  public void traverse() {
+    visitNode(root);
+  }
+
+  private void visitNode(Node current) {
+    if (current == null) {
+      return;
+    }
+
+    visitNode(current.leftChild);
+    current.displayNode();
+    visitNode(current.rightChild);
+  }
+
+  public void displayTree() {
+    Stack<Node> globalStack = new Stack<Node>();
+    globalStack.push(root);
+    int nBlanks = 32;
+    boolean isRowEmpty = false;
+    System.out.println(".......................................");
+    while (!isRowEmpty) {
+      Stack<Node> localStack = new Stack<Node>();
+      isRowEmpty = true;
+      for (int i = 0; i < nBlanks; i++) {
+        System.out.print(" ");
+      }
+
+      while (!globalStack.isEmpty()) {
+        Node temp = globalStack.pop();
+        if (temp != null) {
+          System.out.print(temp.iData);
+          localStack.push(temp.leftChild);
+          localStack.push(temp.rightChild);
+
+          if (temp.leftChild != null || temp.rightChild != null) {
+            isRowEmpty = false;
+          }
+        } else {
+          System.out.print("--");
+          localStack.push(null);
+          localStack.push(null);
+        }
+
+        for (int i = 0; i < nBlanks * 2 - 2; i++) {
+          System.out.print(" ");
+        }
+      }
+
+      System.out.println();
+      nBlanks /= 2;
+
+      while (!localStack.isEmpty()) {
+        globalStack.push(localStack.pop());
+      }
+    }
+
+    System.out.println(".......................................");
   }
 }
