@@ -4,12 +4,13 @@ import java.util.Stack;
 
 class Node {
 
-  public int iData;
+  public int key;
+  public double value;
   public Node rightChild;
   public Node leftChild;
 
   public void displayNode() {
-    System.out.print("{" + iData + "}");
+    System.out.print("{" + key + "}");
   }
 }
 
@@ -24,8 +25,8 @@ public class Tree {
   public Node find(int key) {
     Node current = root;
 
-    while (current.iData != key) {
-      if (current.iData < key) {
+    while (current.key != key) {
+      if (current.key < key) {
         // 如果比 key 小, 表示目標是在右半邊, 因此往右移動
         current = current.rightChild;
       } else {
@@ -41,9 +42,10 @@ public class Tree {
     return current;
   }
 
-  public void insert(int data) {
+  public void insert(int key, double value) {
     Node newNode = new Node();
-    newNode.iData = data;
+    newNode.key = key;
+    newNode.value = value;
 
     // 當 root 為 null 時，表示 tree 中沒有任何 node
     // 因此新 node 為第一個 node 也就是 root
@@ -56,7 +58,7 @@ public class Tree {
       while (current != null) {
         parent = current; // 記錄目前 visit 的 node
 
-        if (current.iData < data) {
+        if (current.key < key) {
           // 如果目前node比data小, 表示要插入在右邊, 因此往右移動
           current = current.rightChild;
           if (current == null) {
@@ -82,9 +84,9 @@ public class Tree {
     Node parent = root;
     boolean isLeftChild = true;
 
-    while (current.iData != key) {
+    while (current.key != key) {
       parent = current;
-      if (key < current.iData) {
+      if (key < current.key) {
         isLeftChild = true;
         current = current.leftChild;
       } else {
@@ -184,7 +186,7 @@ public class Tree {
   }
 
   public void displayTree() {
-    Stack<Node> globalStack = new Stack<Node>();
+    Stack<Node> globalStack = new Stack<>();
     globalStack.push(root);
     int nBlanks = 32;
     boolean isRowEmpty = false;
@@ -199,7 +201,7 @@ public class Tree {
       while (!globalStack.isEmpty()) {
         Node temp = globalStack.pop();
         if (temp != null) {
-          System.out.print(temp.iData);
+          System.out.print(temp.key);
           localStack.push(temp.leftChild);
           localStack.push(temp.rightChild);
 
@@ -226,5 +228,22 @@ public class Tree {
     }
 
     System.out.println(".......................................");
+  }
+
+  public static void main(String[] args) {
+    Tree tree = new Tree();
+    tree.insert(50, 1.5);
+    tree.insert(25, 1.2);
+    tree.insert(75, 1.7);
+    tree.insert(12, 1.5);
+    tree.insert(37, 1.2);
+    tree.insert(43, 1.7);
+    tree.insert(30, 1.5);
+    tree.insert(33, 1.2);
+    tree.insert(87, 1.7);
+    tree.insert(93, 1.5);
+    tree.insert(97, 1.5);
+
+    tree.displayTree();
   }
 }
