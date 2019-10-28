@@ -1,4 +1,4 @@
-package chapter8.tree;
+package chapter8.binarysearchtree;
 
 import java.util.Stack;
 
@@ -14,11 +14,11 @@ class Node {
   }
 }
 
-public class Tree {
+public class BinarySearchTree {
 
   private Node root;
 
-  public Tree() {
+  public BinarySearchTree() {
     root = null;
   }
 
@@ -231,19 +231,19 @@ public class Tree {
   }
 
   public static void main(String[] args) {
-    Tree tree = new Tree();
-    tree.insert(50, 1.5);
-    tree.insert(25, 1.2);
-    tree.insert(75, 1.7);
-    tree.insert(12, 1.5);
-    tree.insert(37, 1.2);
-    tree.insert(43, 1.7);
-    tree.insert(30, 1.5);
-    tree.insert(33, 1.2);
-    tree.insert(87, 1.7);
-    tree.insert(93, 1.5);
-    tree.insert(97, 1.5);
+    BinarySearchTree binarySearchTree = new BinarySearchTree();
+    binarySearchTree.insert(50, 1.5);
+    binarySearchTree.insert(25, 1.2);
+    binarySearchTree.insert(75, 1.7);
+    binarySearchTree.insert(12, 1.5);
+    binarySearchTree.insert(37, 1.2);
+    binarySearchTree.insert(43, 1.7);
+    binarySearchTree.insert(30, 1.5);
+    binarySearchTree.insert(33, 1.2);
+    binarySearchTree.insert(87, 1.7);
+    binarySearchTree.insert(93, 1.5);
+    binarySearchTree.insert(97, 1.5);
 
-    tree.displayTree();
+    binarySearchTree.displayTree();
   }
 }
