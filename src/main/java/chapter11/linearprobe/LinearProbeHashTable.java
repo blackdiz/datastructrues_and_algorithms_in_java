@@ -46,7 +46,7 @@ public class LinearProbeHashTable {
     int hashValue = hash(key);
 
     while (hashArray[hashValue] != null &&
-        hashArray[hashValue].getKey() != -1) { // -1 表示為已被刪除的資料可略過
+        hashArray[hashValue].getKey() != -1) { // -1 表示為此格為已被刪除的資料可再放入新資料
       ++hashValue;
       hashValue %= arraySize; // 如果已到末端則回到前端繼續搜尋可插入資料的格子
     }
