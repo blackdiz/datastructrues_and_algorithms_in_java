@@ -1,4 +1,4 @@
-package chapter8.tree234;
+package chapter10.tree234;
 
 class DataItem {
 
