@@ -86,7 +86,7 @@ public class Heap {
     Node top = heapArray[topIndex];
     int largerChildIndex;
 
-    while (topIndex < currentSize / 2) { // 如果目標 node 的 index < currentSize / 2 表示有 left child
+    while (topIndex < currentSize / 2) { // 如果目標 node 的 index < currentSize / 2 表示有 child
       int leftChildIndex = topIndex * 2 + 1;
       int rightChildIndex = leftChildIndex + 1;
 
@@ -97,8 +97,10 @@ public class Heap {
       } else {
         largerChildIndex = leftChildIndex;
       }
-      // 如果 key 較大的 child 的 key 比目標 node 的 key 大就交換位置
       if (top.getKey() >= heapArray[largerChildIndex].getKey()) {
+        break;
+      } else {
+        // 如果 key 較大的 child 的 key 比目標 node 的 key 大就交換位置
         heapArray[topIndex] = heapArray[largerChildIndex];
         topIndex = largerChildIndex;
       }
