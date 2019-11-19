@@ -23,9 +23,8 @@ public class Heap {
   private int maxSize;
   private int currentSize;
 
-  public Heap(int maxSize) {
-    this.maxSize = maxSize;
-    heapArray = new Node[maxSize];
+  public Heap(int size) {
+    heapArray = new Node[size];
     currentSize = 0;
   }
 
@@ -33,14 +32,13 @@ public class Heap {
     return currentSize == 0;
   }
 
-  public boolean insert(int key) {
+  public boolean insert(int data) {
     if (currentSize == maxSize) {
       return false;
     }
-
-    Node newNode = new Node(key);
-    heapArray[currentSize] = newNode;
-    trickleUp(currentSize++);
+    Node newNode = new Node(data);
+    heapArray[currentSize++] = newNode;
+    tackleUp(currentSize);
 
     return true;
   }
@@ -49,47 +47,63 @@ public class Heap {
     if (currentSize == 0) {
       return null;
     }
-
     Node root = heapArray[0];
     heapArray[0] = heapArray[--currentSize];
-    trickleDown(0);
+    tackleDown(0);
 
     return root;
   }
 
-  private void trickleUp(int index) {
-    int parentIndex = (index - 1) / 2;
-    Node bottom = heapArray[index];
-
-    while (index > 0 && heapArray[parentIndex].getKey() < bottom.getKey()) {
-      heapArray[parentIndex] = heapArray[index];
-      index = parentIndex;
-      parentIndex = (parentIndex - 1) / 2;
+  public boolean change(int index, int newValue) {
+    if (index < 0 || index >= currentSize) {
+      return false;
     }
 
-    heapArray[index] = bottom;
+    int oldValue = heapArray[index].getKey();
+    heapArray[index].setKey(newValue);
+
+    if (oldValue < newValue) {
+      tackleUp(index);
+    } else {
+      tackleDown(index);
+    }
+
+    return true;
   }
 
-  private void trickleDown(int index) {
-    int largerChild;
-    Node top = heapArray[index];
+  private void tackleUp(int bottomIndex) {
+    Node bottomNode = heapArray[bottomIndex];
+    int parentIndex = (bottomIndex - 1) / 2;
+    while (bottomIndex > 0 && heapArray[parentIndex].getKey() < bottomNode.getKey()) {
+      heapArray[bottomIndex] = heapArray[parentIndex];
+      bottomIndex = parentIndex;
+      parentIndex = (parentIndex - 1) / 2;
+    }
+    heapArray[bottomIndex] = bottomNode;
+  }
 
-    while (index < currentSize / 2) {
-      int leftChild = index * 2 + 1;
-      int rightChild = leftChild + 1;
-      if (rightChild < currentSize &&
-          heapArray[leftChild].getKey() < heapArray[rightChild].getKey()) {
-        largerChild = rightChild;
+  private void tackleDown(int topIndex) {
+    Node top = heapArray[topIndex];
+    int largerChildIndex;
+
+    while (topIndex < currentSize / 2) { // 如果目標 node 的 index < currentSize / 2 表示有 left child
+      int leftChildIndex = topIndex * 2 + 1;
+      int rightChildIndex = leftChildIndex + 1;
+
+      if (rightChildIndex < currentSize &&
+          // 計算出來的 right child index > currentSize 表示沒有 right child
+          heapArray[rightChildIndex].getKey() > heapArray[leftChildIndex].getKey()) {
+        largerChildIndex = rightChildIndex;
       } else {
-        largerChild = leftChild;
+        largerChildIndex = leftChildIndex;
       }
-      if (top.getKey() >= heapArray[largerChild].getKey()) {
-        break;
+      // 如果 key 較大的 child 的 key 比目標 node 的 key 大就交換位置
+      if (top.getKey() >= heapArray[largerChildIndex].getKey()) {
+        heapArray[topIndex] = heapArray[largerChildIndex];
+        topIndex = largerChildIndex;
       }
-      heapArray[index] = heapArray[largerChild];
-      index = largerChild;
     }
 
-    heapArray[index] = top;
+    heapArray[topIndex] = top;
   }
 }
