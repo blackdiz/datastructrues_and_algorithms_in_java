@@ -2,8 +2,8 @@ package chapter14.graph.bfs;
 
 class Queue {
 
-  private int front;
-  private int rear;
+  private int front; // 標記目前可移除元素的位置
+  private int rear; // 標記目前已新增元素的位置
   private int[] array;
   private int maxSize;
 
@@ -17,10 +17,12 @@ class Queue {
   public void insert(int i) {
     if (!isFull()) {
       if (isEmpty()) {
+        // 如果 queue 是空的，則從 index 0 開始
         rear = 0;
         front = 0;
         array[rear] = i;
       } else {
+        // 新增時用 % maxSize 找出如果目前已到末端則從前端循環時要插入的 index
         rear = (rear + 1) % maxSize;
         array[rear] = i;
       }
@@ -32,10 +34,13 @@ class Queue {
       return -1;
     } else {
       int temp = array[front];
+      // 當 front == rear 時, 表示已移除最後一個元素, 所以重置 front、rear 回到起始值 -1 表示 queue 為空
+      // 因為當 queue 為空在第一次新增元素後，front 和 rear 都為 0，所以不能直接用 front == rear 判斷是否為空
       if (front == rear) {
         front = -1;
         rear = -1;
       } else {
+        // 移除元素後用 % maxSize 找出如果目前已到末端則從前端循環時下次要移除元素的 index
         front = (front + 1) % maxSize;
       }
 
@@ -51,6 +56,8 @@ class Queue {
     return rear == -1;
   }
 
+  // 因為 rear 指向的是可新增元素的位置，而 front 指向的是目前可移除元素的位置,
+  // 假如下一個可新增的位置和 front 的位置相同，表示該位置已有元素存在，所以 queue 已滿無法新增
   private boolean isFull() {
     return (rear + 1) % maxSize == front;
   }
@@ -95,28 +102,32 @@ class Graph {
     start.wasVisited = true;
     System.out.print(start.label);
     queue.insert(0);
+    int adjacentVertexIndex;
 
     while (!queue.isEmpty()) {
-      int currentVertexIndex = queue.peek();
-      int adjacentVertexIndex = getAdjacentVertexIndex(currentVertexIndex);
-      if (adjacentVertexIndex != -1) {
+      int currentVertexIndex = queue.remove();
+      while ((adjacentVertexIndex = getAdjacentVertexIndex(currentVertexIndex)) != -1) {
         Vertex adjacentVertex = vertices[adjacentVertexIndex];
+        // 當有相鄰的 vertex 時，對它進行 3 個步驟，拜訪它、標記成已拜訪、新增到 queue 中
         adjacentVertex.wasVisited = true;
         System.out.print(adjacentVertex.label);
         queue.insert(adjacentVertexIndex);
-      } else {
-        queue.remove();
       }
     }
 
-    for (int i = 0; i < nVertices; i++) {
+    // 全部走過後清除 vertex 的已拜訪標記
+    for (
+        int i = 0;
+        i < nVertices; i++) {
       vertices[i].wasVisited = false;
     }
+
   }
 
-  private int getAdjacentVertexIndex(int index) {
+  private int getAdjacentVertexIndex(int vertexIndex) {
     for (int i = 0; i < nVertices; i++) {
-      if (adjacencyMatrix[index][i] == 1 && !vertices[i].wasVisited) {
+      // 檢查和 vertexIndex 指向的 vertex 是否和其他 vertex 相鄰，若相鄰再檢查是否已拜訪過
+      if (adjacencyMatrix[vertexIndex][i] == 1 && !vertices[i].wasVisited) {
         return i;
       }
     }
