@@ -1,9 +1,8 @@
-package com.blackdiz.algorithm.chapter4;
+package chapter4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import javax.swing.plaf.basic.BasicButtonUI;
 
 class IntStackX {
 
