@@ -1,6 +1,8 @@
-package com.blackdiz.algorithm.chapter4;
+package chapter4;
 
 /**
+ * 這個 priority queue 的實作是由小到大排序
+ *
  * @author blackdiz
  */
 public class PriorityQueue {
