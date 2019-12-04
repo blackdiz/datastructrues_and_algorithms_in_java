@@ -116,6 +116,7 @@ public class DepthFirstSearch {
     graph.addEdge(0, 3);
     graph.addEdge(3, 4);
 
+    // 結果應該印出: Visits: ABCDE
     System.out.print("Visits: ");
     graph.depthFirstSearch();
     System.out.println();

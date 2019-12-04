@@ -132,6 +132,7 @@ public class TopologicalSort {
     graph.addEdge(5, 7); // FH
     graph.addEdge(6, 7); // GH
 
+    // 結果應該印出: Topologically sorted order: BAEDGCFH
     graph.topologicalSort();
   }
 }

@@ -160,6 +160,7 @@ public class BreadthFirstSearch {
     graph.addEdge(5, 7);
     graph.addEdge(6, 8);
 
+    // 結果應該印出: ABCDEFGHI
     graph.breadthFirstSearch();
   }
 }

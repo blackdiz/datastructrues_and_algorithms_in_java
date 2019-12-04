@@ -209,6 +209,7 @@ public class MinimumSpanningTreesOfWeightedGraph {
     graph.addEdge(3, 4, 12); // DE 12
     graph.addEdge(4, 5, 7); // EF 7
 
+    // 結果應該印出: Minimum spanning tree:AD AB BE EC CF
     System.out.print("Minimum spanning tree:");
     graph.minimumSpanningTreesOfWeightedGraph();
     System.out.println();

@@ -134,6 +134,7 @@ public class MinimumSpanningTrees {
     graph.addEdge(2, 4);
     graph.addEdge(3, 4);
 
+    // 結果應該印出: Minimum spanning tree: AB BC CD DE
     System.out.print("Minimum spanning tree: ");
     graph.minimumSpanningTrees();
   }
