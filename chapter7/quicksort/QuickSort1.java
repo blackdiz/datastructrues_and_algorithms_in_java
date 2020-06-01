@@ -28,6 +28,8 @@ class Array {
 
   public void recQuickSort(int left, int right) {
     if (right - left <= 0) {
+      // 這裡的判斷用 right - left <= 0 是有用途的，如果 pivot 本身已經是最大的數字且已排在最右邊，則 left = pivot index + 1 會超出 right
+      // 這時就不必再做排序
       return;
     } else {
       long pivot = array[right];
