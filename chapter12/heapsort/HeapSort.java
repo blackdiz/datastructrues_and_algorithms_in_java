@@ -59,7 +59,7 @@ class Heap {
 
     while (bottomIndex > 0 &&
         heapArray[bottomIndex].getKey() > heapArray[parentIndex].getKey()) {
-      heapArray[parentIndex] = heapArray[bottomIndex];
+      heapArray[bottomIndex] = heapArray[parentIndex];
       bottomIndex = parentIndex;
     }
 
